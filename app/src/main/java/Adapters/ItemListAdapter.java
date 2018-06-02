@@ -19,7 +19,9 @@ import Modal.BakeItem;
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder> {
 ArrayList<BakeItem> listItems=null;
 private final item_click handle_click;
-    public ItemListAdapter(item_click item_click_handler) {
+private Context context;
+    public ItemListAdapter(item_click item_click_handler,Context c) {
+        context=c;
         handle_click=item_click_handler;
     }
     public interface item_click{
@@ -43,11 +45,11 @@ private final item_click handle_click;
             String itemName=listItems.get(position).getName();
             holder.itemName.setText(itemName);
             itemName=itemName.toLowerCase();
-            if (itemName.contains("pie"))
+            if (itemName.contains(  context.getString(R.string.item_pie)))
                 holder.itemImage.setImageResource(R.drawable.pie);
-            else if (itemName.contains("cheesecake"))
+            else if (itemName.contains(context.getString(R.string.item_cheesecake)))
                 holder.itemImage.setImageResource(R.drawable.cheesecake);
-            else if (itemName.contains("brown"))
+            else if (itemName.contains(context.getString(R.string.item_brown)))
                 holder.itemImage.setImageResource(R.drawable.brownies);
             else
                 holder.itemImage.setImageResource(R.drawable.cake);

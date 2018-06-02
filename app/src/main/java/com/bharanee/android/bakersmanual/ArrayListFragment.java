@@ -23,7 +23,7 @@ public class ArrayListFragment extends ListFragment {
     public ArrayListFragment() {
     }
     public interface onitemclickedListener{
-        void onItemSelected(int itemId,int stepPosition);
+        void onItemSelected(int itemId,int stepPosition,String type);
     }
 
     @Override
@@ -41,18 +41,18 @@ public class ArrayListFragment extends ListFragment {
        View view=inflater.inflate(R.layout.fragment_lists,container,false);
         return view;
     }
-    public void setData(ArrayList<String> listItems,int itemId){
+    public void setData(ArrayList<String> listItems,int itemId,String type){
     listArray=listItems.toArray(new String[listItems.size()]);
     this.itemId=itemId;
-    type="steps_short";
+    this.type=type;
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState!=null)
-        {listArray=savedInstanceState.getStringArray("listItems");
-        itemId=savedInstanceState.getInt("itemId");
-        type=savedInstanceState.getString("type");
+        {listArray=savedInstanceState.getStringArray(getString(R.string.listItemsParam));
+        itemId=savedInstanceState.getInt(getString(R.string.itemIdParam));
+        type=savedInstanceState.getString(getString(R.string.typeParam));
         }
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,listArray);
         setListAdapter(adapter);
@@ -60,9 +60,9 @@ public class ArrayListFragment extends ListFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putStringArray("listItems",listArray);
-        outState.putInt("itemId",itemId);
-        outState.putString("type",type);
+        outState.putStringArray(getString(R.string.listItemsParam),listArray);
+        outState.putInt(getString(R.string.itemIdParam),itemId);
+        outState.putString(getString(R.string.typeParam),type);
         super.onSaveInstanceState(outState);
 
     }
@@ -70,10 +70,10 @@ public class ArrayListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        if (type.equals("steps_short")){
-            if (position==0 ){
-            type="ingredients";
-            DetailsPage.fragmentType="ingredients";
+        if (type.equals(getString(R.string.type_steps_short))){
+            if (position==0 && !DetailsPage.screenType.equals(getString(R.string.screenType_tablet))){
+            type=getString(R.string.type_ingredients);
+            DetailsPage.fragmentType=getString(R.string.type_ingredients);
             listArray=null;
             ArrayList<String> ingredients=NetworkTasks.items.get(itemId).getIngredients();
             listArray= ingredients.toArray(new String[ingredients.size()]);
@@ -81,7 +81,7 @@ public class ArrayListFragment extends ListFragment {
             }
             else{
                 //contact activity
-                mCallback.onItemSelected(itemId,position);
+                mCallback.onItemSelected(itemId,position,type);
             }
         }
     }

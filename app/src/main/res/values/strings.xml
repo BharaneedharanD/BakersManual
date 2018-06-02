@@ -2,4 +2,21 @@
     <string name="app_name">Baker\'s Manual</string>
     <string name="item_image">Item Image</string>
     <string name="API_URL">https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="item_pie">pie</string>
+    <string name="item_cheesecake">cheesecake</string>
+    <string name="item_brown">brown</string>
+    <string name="listItemsParam">listItems</string>
+    <string name="itemIdParam">itemId</string>
+    <string name="typeParam">type</string>
+    <string name="type_steps_short">steps_short</string>
+    <string name="type_ingredients">ingredients</string>
+    <string name="screenType_tablet">tablet</string>
+    <string name="type_Detailed_Steps">Detailed_Steps</string>
+    <string name="fragmentParam">fragment</string>
+    <string name="positionParam">position</string>
+    <string name="screenTypeParam">screenType</string>
+    <string name="stepPositionParam">stepPosition</string>
+    <string name="videoPosParam">videoPos</string>
 </resources>

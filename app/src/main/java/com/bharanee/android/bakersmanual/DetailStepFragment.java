@@ -32,7 +32,7 @@ public class DetailStepFragment extends Fragment {
   SimpleExoPlayerView mPlayerView;
     SimpleExoPlayer mExoplayer;
     Context context;
-    Uri videouri;
+    public Uri videouri;
     long videoPos=0;
     TextView detailedSteps;
     ImageView prevStep,nextStep;
@@ -53,11 +53,11 @@ public class DetailStepFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState!=null){
-            itemId=savedInstanceState.getInt("itemId");
-            stepPosition=savedInstanceState.getInt("stepPosition");
+            itemId=savedInstanceState.getInt(getString(R.string.itemIdParam));
+            stepPosition=savedInstanceState.getInt(getString(R.string.stepPositionParam));
             setUrl();
             context=getActivity();
-            videoPos=savedInstanceState.getLong("videoPos");
+            videoPos=savedInstanceState.getLong(getString(R.string.videoPosParam));
         }
         View view=inflater.inflate(R.layout.fragment_detailed_steps,container,false);
         detailedSteps=view.findViewById(R.id.detailedStep_txt);
@@ -99,7 +99,7 @@ public class DetailStepFragment extends Fragment {
         }
     }
 
-    private void initializePlayer(Uri uri) {
+    public void initializePlayer(Uri uri) {
         if (uri!=null){
         TrackSelector trackSelector=new DefaultTrackSelector();
         LoadControl loader=new DefaultLoadControl();
@@ -137,9 +137,9 @@ public class DetailStepFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt("itemId",itemId);
-        outState.putLong("videoPos",videoPos);
-        outState.putInt("stepPosition",stepPosition);
+        outState.putInt(getString(R.string.itemIdParam),itemId);
+        outState.putLong(getString(R.string.videoPosParam),videoPos);
+        outState.putInt(getString(R.string.stepPositionParam),stepPosition);
         super.onSaveInstanceState(outState);
     }
 }
