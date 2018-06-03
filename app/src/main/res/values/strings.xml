@@ -19,4 +19,6 @@
     <string name="screenTypeParam">screenType</string>
     <string name="stepPositionParam">stepPosition</string>
     <string name="videoPosParam">videoPos</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

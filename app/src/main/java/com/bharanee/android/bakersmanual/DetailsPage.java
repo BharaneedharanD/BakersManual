@@ -1,5 +1,8 @@
 package com.bharanee.android.bakersmanual;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +19,6 @@ public static String fragmentType;
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(getString(R.string.itemIdParam),itemId);
-        outState.putString(getString(R.string.screenTypeParam),screenType);
         super.onSaveInstanceState(outState);
     }
 
@@ -24,12 +26,11 @@ public static String fragmentType;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
-
+        View v=findViewById(R.id.screenView);
+        screenType= (String) v.getTag();
         if (savedInstanceState==null) {
             Intent dataIntent = getIntent();
             if (dataIntent != null) {
-                View v=findViewById(R.id.screenView);
-                screenType= (String) v.getTag();
                 fragmentType=dataIntent.getStringExtra(getString(R.string.fragmentParam));
                 itemId=dataIntent.getIntExtra(getString(R.string.positionParam),0);
                 if (screenType.equals(getString(R.string.screenType_tablet))){
@@ -56,16 +57,14 @@ public static String fragmentType;
                 }
             }
         }else{
-            screenType=savedInstanceState.getString(getString(R.string.screenTypeParam));
             itemId=savedInstanceState.getInt(getString(R.string.itemIdParam));
             if (screenType.equals(getString(R.string.screenType_tablet))){
-
                 detailStepFragment=new DetailStepFragment();
                 detailStepFragment.setData(itemId,1,this);
                 getFragmentManager().beginTransaction().replace(R.id.videoFrame,detailStepFragment).commit();
             }
         }
-        android.app.ActionBar bar=getActionBar();
+        ActionBar bar=getSupportActionBar();
         bar.setTitle(NetworkTasks.items.get(itemId).getName());
     }
 
@@ -93,6 +92,15 @@ public static String fragmentType;
         }
         else
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        ListRemoteViewsFactory.setData(NetworkTasks.items.get(itemId).getIngredients(),itemId);
+        AppWidgetManager manager=AppWidgetManager.getInstance(this);
+        int[] appWidgetids=manager.getAppWidgetIds(new ComponentName(this,CakeWidgetProvider.class));
+        manager.notifyAppWidgetViewDataChanged(appWidgetids,R.id.widget_listView);
+        super.onPause();
     }
 
     @Override

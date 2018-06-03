@@ -7,7 +7,7 @@
     tools:context=".DetailsPage">
     <View
         android:id="@+id/screenView"
-        android:tag="phone"
+        android:tag="phone_landscape"
         android:layout_width="0dp"
         android:layout_height="0dp"/>
 <FrameLayout
