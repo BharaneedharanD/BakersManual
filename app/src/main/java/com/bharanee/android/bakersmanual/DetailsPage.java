@@ -18,6 +18,7 @@ public static String fragmentType;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        //testing branch
         outState.putInt(getString(R.string.itemIdParam),itemId);
         super.onSaveInstanceState(outState);
     }
