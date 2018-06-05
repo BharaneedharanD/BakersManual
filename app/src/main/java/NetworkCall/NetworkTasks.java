@@ -29,8 +29,9 @@ public class NetworkTasks {
         url=context.getString(R.string.API_URL);
         requestQueue= Volley.newRequestQueue(context);
     }
-    public void parse(ItemListAdapter adapter){
+    public void parse(ItemListAdapter adapter,SimpleIdlingResource idlingResource){
         final ItemListAdapter mAdapter=adapter;
+        final SimpleIdlingResource simpleIdlingResource=idlingResource;
         JsonArrayRequest arrayRequest=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -45,6 +46,8 @@ public class NetworkTasks {
                     }
                 }
                 mAdapter.setData(items);
+                if (simpleIdlingResource!=null)
+                    simpleIdlingResource.setIdleStat(true);
             }
         }, new Response.ErrorListener() {
             @Override
