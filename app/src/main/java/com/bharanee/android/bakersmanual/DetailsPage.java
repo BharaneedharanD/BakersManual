@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 public class DetailsPage extends AppCompatActivity implements ArrayListFragment.onitemclickedListener {
 private static int itemId=-1;
 public static String screenType;
+public static int stepPosition=1;
 public static String fragmentType;
     private DetailStepFragment detailStepFragment;
     @BindView(R.id.screenView) View v;
@@ -65,7 +66,7 @@ public static String fragmentType;
             itemId=savedInstanceState.getInt(getString(R.string.itemIdParam));
             if (screenType.equals(getString(R.string.screenType_tablet))){
                 detailStepFragment=new DetailStepFragment();
-                detailStepFragment.setData(itemId,1,this);
+                detailStepFragment.setData(itemId,stepPosition,this);
                 getFragmentManager().beginTransaction().replace(R.id.videoFrame,detailStepFragment).commit();
             }
         }

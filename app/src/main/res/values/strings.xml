@@ -21,4 +21,6 @@
     <string name="videoPosParam">videoPos</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="phone_landscape">phone_landscape</string>
+    <string name="tablet_landscape">tablet_landscape</string>
 </resources>

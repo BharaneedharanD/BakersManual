@@ -45,10 +45,10 @@ public class HomeScreen extends AppCompatActivity implements ItemListAdapter.ite
         String screenType= (String) v.getTag();
         ItemListAdapter adapter=new ItemListAdapter(this,this);
         networkObject.parse(adapter,mIdlingResource);
-        if (screenType.equals(getString(R.string.screenType_tablet))||screenType.equals("phone_landscape")){
+        if (screenType.equals(getString(R.string.screenType_tablet))||screenType.equals(getString(R.string.phone_landscape))){
             GridLayoutManager manager=new GridLayoutManager(HomeScreen.this,2,GridLayoutManager.VERTICAL,false);
             items_lists.setLayoutManager(manager);
-        }else if (screenType.equals("tablet_landscape")){
+        }else if (screenType.equals(getString(R.string.tablet_landscape))){
             GridLayoutManager manager=new GridLayoutManager(HomeScreen.this,3,GridLayoutManager.VERTICAL,false);
             items_lists.setLayoutManager(manager);
         }

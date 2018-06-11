@@ -68,24 +68,8 @@ public class DetailStepFragment extends Fragment {
             videoPos=savedInstanceState.getLong(getString(R.string.videoPosParam));
         }
         View view=inflater.inflate(R.layout.fragment_detailed_steps,container,false);
-        //detailedSteps=view.findViewById(R.id.detailedStep_txt);
-        //mPlayerView=view.findViewById(R.id.playerview);
         ButterKnife.bind(this,view);
         mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),R.drawable.default_baking));
-        /*prevStep=view.findViewById(R.id.prev_button);
-        prevStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToPrevStep();
-            }
-        });
-        nextStep=view.findViewById(R.id.next_button);
-        nextStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToNextStep();
-            }
-        });*/
         return view;
     }
 
@@ -114,7 +98,7 @@ public class DetailStepFragment extends Fragment {
         LoadControl loader=new DefaultLoadControl();
         mExoplayer= ExoPlayerFactory.newSimpleInstance(context,trackSelector,loader);
         mPlayerView.setPlayer(mExoplayer);
-        String userAgent=Util.getUserAgent(context, "Baker's Manual");
+        String userAgent=Util.getUserAgent(context, context.getString(R.string.app_name));
         MediaSource mediaSource=new ExtractorMediaSource(uri,new DefaultDataSourceFactory(context,userAgent),
                 new DefaultExtractorsFactory(),null,null);
         mExoplayer.prepare(mediaSource);
@@ -149,6 +133,7 @@ public class DetailStepFragment extends Fragment {
         outState.putInt(getString(R.string.itemIdParam),itemId);
         outState.putLong(getString(R.string.videoPosParam),videoPos);
         outState.putInt(getString(R.string.stepPositionParam),stepPosition);
+        DetailsPage.stepPosition=stepPosition;
         super.onSaveInstanceState(outState);
     }
 }
