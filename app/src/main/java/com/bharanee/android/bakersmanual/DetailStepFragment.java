@@ -25,17 +25,25 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import NetworkCall.NetworkTasks;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailStepFragment extends Fragment {
     public DetailStepFragment() {
     }
-  SimpleExoPlayerView mPlayerView;
+  @BindView(R.id.playerview) SimpleExoPlayerView mPlayerView;
     SimpleExoPlayer mExoplayer;
     Context context;
     public Uri videouri;
     long videoPos=0;
-    TextView detailedSteps;
-    ImageView prevStep,nextStep;
+    @BindView(R.id.detailedStep_txt) TextView detailedSteps;
+    @BindView(R.id.prev_button)ImageView prevStep;
+    @BindView(R.id.next_button) ImageView nextStep;
+    @OnClick(R.id.prev_button)
+    public void prev_Button(){goToPrevStep();}
+    @OnClick(R.id.next_button)
+    public void next_Button(){goToNextStep();}
     private int itemId,stepPosition;
 
     public void setData(int itemId,int stepPosition,Context context){
@@ -60,10 +68,11 @@ public class DetailStepFragment extends Fragment {
             videoPos=savedInstanceState.getLong(getString(R.string.videoPosParam));
         }
         View view=inflater.inflate(R.layout.fragment_detailed_steps,container,false);
-        detailedSteps=view.findViewById(R.id.detailedStep_txt);
-        mPlayerView=view.findViewById(R.id.playerview);
+        //detailedSteps=view.findViewById(R.id.detailedStep_txt);
+        //mPlayerView=view.findViewById(R.id.playerview);
+        ButterKnife.bind(this,view);
         mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),R.drawable.default_baking));
-        prevStep=view.findViewById(R.id.prev_button);
+        /*prevStep=view.findViewById(R.id.prev_button);
         prevStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +85,7 @@ public class DetailStepFragment extends Fragment {
             public void onClick(View v) {
                 goToNextStep();
             }
-        });
+        });*/
         return view;
     }
 

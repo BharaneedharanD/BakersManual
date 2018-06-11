@@ -2,12 +2,15 @@ package com.bharanee.android.bakersmanual;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import NetworkCall.NetworkTasks;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class DetailsPage extends AppCompatActivity implements ArrayListFragment.onitemclickedListener {
@@ -15,7 +18,7 @@ private static int itemId=-1;
 public static String screenType;
 public static String fragmentType;
     private DetailStepFragment detailStepFragment;
-
+    @BindView(R.id.screenView) View v;
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //testing branch
@@ -27,7 +30,8 @@ public static String fragmentType;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
-        View v=findViewById(R.id.screenView);
+
+        ButterKnife.bind(this);
         screenType= (String) v.getTag();
         if (savedInstanceState==null) {
             Intent dataIntent = getIntent();

@@ -5,6 +5,7 @@
     android:background="#09C"
     android:orientation="vertical"
     android:padding="@dimen/widget_margin">
+
     <ListView
         android:id="@+id/widget_listView"
         android:layout_width="match_parent"

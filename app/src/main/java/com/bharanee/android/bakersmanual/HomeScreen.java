@@ -15,6 +15,8 @@ import android.view.View;
 import Adapters.ItemListAdapter;
 import NetworkCall.NetworkTasks;
 import NetworkCall.SimpleIdlingResource;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class HomeScreen extends AppCompatActivity implements ItemListAdapter.item_click {
     @Nullable
@@ -28,15 +30,18 @@ public class HomeScreen extends AppCompatActivity implements ItemListAdapter.ite
         }
         return mIdlingResource;
     }
+    @BindView(R.id.items_rv) RecyclerView items_lists;
+    @BindView(R.id.screenView) View v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        RecyclerView items_lists=findViewById(R.id.items_rv);
+        //RecyclerView items_lists=findViewById(R.id.items_rv);
+        ButterKnife.bind(this);
         NetworkTasks networkObject=new NetworkTasks(this);
         if (mIdlingResource!=null)
             mIdlingResource.setIdleStat(false);
-        View v=findViewById(R.id.screenView);
+        //View v=findViewById(R.id.screenView);
         String screenType= (String) v.getTag();
         ItemListAdapter adapter=new ItemListAdapter(this,this);
         networkObject.parse(adapter,mIdlingResource);

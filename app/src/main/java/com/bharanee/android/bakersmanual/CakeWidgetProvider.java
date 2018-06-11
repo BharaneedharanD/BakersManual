@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 /**
@@ -24,11 +25,16 @@ public class CakeWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntentTemplate= TaskStackBuilder.create(context)
                 .addNextIntentWithParentStack(activityIntent).getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
         views.setPendingIntentTemplate(R.id.widget_listView,pendingIntentTemplate);
-        //views.setOnClickPendingIntent(R.id.widget_listView, PendingIntent.getActivity(context,0,activityIntent,PendingIntent.FLAG_UPDATE_CURRENT));
-        // Instruct the widget manager to update the widget
+
         views.setEmptyView(R.id.widget_listView,R.id.empty_view);
+
+        Intent appOpenIntent=new Intent(context,HomeScreen.class);
+        PendingIntent homeScreenPIntent=PendingIntent.getActivity(context,0,appOpenIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.empty_view,homeScreenPIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
+
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

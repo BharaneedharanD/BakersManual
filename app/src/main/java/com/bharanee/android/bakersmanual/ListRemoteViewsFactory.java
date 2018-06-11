@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     Context context;
     public static int itemId=0;
+
     private static final String TAG="ON DATA CHANGED";
     private  static ArrayList<String> data=new ArrayList<>();
 
@@ -18,6 +19,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         data=null;
         data=d;
         itemId=item;
+
     }
 
 
@@ -33,6 +35,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onDataSetChanged() {
+
         Log.v(TAG,data.size()+" size ");
     }
 
@@ -61,7 +64,8 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         activityIntent.putExtra("position",ListRemoteViewsFactory.itemId);
         activityIntent.putExtra("fragment",context.getString(R.string.type_steps_short));
         remoteViews.setOnClickFillInIntent(R.id.widget_item_container,activityIntent);
-        Log.v(TAG,data.get(position));
+
+       // Log.v(TAG,data.get(position));
         return remoteViews;
     }
 
