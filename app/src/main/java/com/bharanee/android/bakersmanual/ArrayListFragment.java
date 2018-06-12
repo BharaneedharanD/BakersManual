@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import NetworkCall.NetworkTasks;
+import networkcalls.NetworkTasks;
 
 
 public class ArrayListFragment extends ListFragment {

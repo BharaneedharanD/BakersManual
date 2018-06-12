@@ -2,13 +2,12 @@ package com.bharanee.android.bakersmanual;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import NetworkCall.NetworkTasks;
+import networkcalls.NetworkTasks;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

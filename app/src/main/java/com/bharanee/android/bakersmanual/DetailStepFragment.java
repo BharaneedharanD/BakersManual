@@ -24,7 +24,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import NetworkCall.NetworkTasks;
+import networkcalls.NetworkTasks;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,11 +32,20 @@ import butterknife.OnClick;
 public class DetailStepFragment extends Fragment {
     public DetailStepFragment() {
     }
-  @BindView(R.id.playerview) SimpleExoPlayerView mPlayerView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(Util.SDK_INT>23)
+            initializePlayer(videouri);
+    }
+
+    @BindView(R.id.playerview) SimpleExoPlayerView mPlayerView;
     SimpleExoPlayer mExoplayer;
     Context context;
     public Uri videouri;
     long videoPos=0;
+    Boolean getState=true;
     @BindView(R.id.detailedStep_txt) TextView detailedSteps;
     @BindView(R.id.prev_button)ImageView prevStep;
     @BindView(R.id.next_button) ImageView nextStep;
@@ -44,7 +53,7 @@ public class DetailStepFragment extends Fragment {
     public void prev_Button(){goToPrevStep();}
     @OnClick(R.id.next_button)
     public void next_Button(){goToNextStep();}
-    private int itemId,stepPosition;
+    private int itemId,stepPosition,windowIndex=0;
 
     public void setData(int itemId,int stepPosition,Context context){
         this.itemId=itemId;
@@ -66,6 +75,8 @@ public class DetailStepFragment extends Fragment {
             setUrl();
             context=getActivity();
             videoPos=savedInstanceState.getLong(getString(R.string.videoPosParam));
+            windowIndex=savedInstanceState.getInt("windowIndex");
+            getState=savedInstanceState.getBoolean("playState");
         }
         View view=inflater.inflate(R.layout.fragment_detailed_steps,container,false);
         ButterKnife.bind(this,view);
@@ -102,14 +113,15 @@ public class DetailStepFragment extends Fragment {
         MediaSource mediaSource=new ExtractorMediaSource(uri,new DefaultDataSourceFactory(context,userAgent),
                 new DefaultExtractorsFactory(),null,null);
         mExoplayer.prepare(mediaSource);
-        mExoplayer.setPlayWhenReady(true);
-        mExoplayer.seekTo(videoPos);
-        videoPos=0;
+        mExoplayer.setPlayWhenReady(getState);
+        mExoplayer.seekTo(windowIndex,videoPos);
+        videoPos=0;windowIndex=0;
         }
         detailedSteps.setText(NetworkTasks.items.get(itemId).getSteps().get(stepPosition));
     }
     public void releasePlayer(){
         if (mExoplayer!=null){
+            mExoplayer.setPlayWhenReady(false);
         mExoplayer.stop();
         mExoplayer.release();}
         mExoplayer=null;
@@ -118,14 +130,24 @@ public class DetailStepFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (Util.SDK_INT<=23||mExoplayer==null)
         initializePlayer(videouri);
     }
 
     @Override
     public void onPause() {
         videoPos=mExoplayer.getCurrentPosition();
-        releasePlayer();
+        windowIndex=mExoplayer.getCurrentWindowIndex();
+        getState=mExoplayer.getPlayWhenReady();
+        if (Util.SDK_INT<=23)
+        {releasePlayer();}
         super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT>23)releasePlayer();
     }
 
     @Override
@@ -133,6 +155,8 @@ public class DetailStepFragment extends Fragment {
         outState.putInt(getString(R.string.itemIdParam),itemId);
         outState.putLong(getString(R.string.videoPosParam),videoPos);
         outState.putInt(getString(R.string.stepPositionParam),stepPosition);
+        outState.putInt("windowIndex",windowIndex);
+        outState.putBoolean("playState",getState);
         DetailsPage.stepPosition=stepPosition;
         super.onSaveInstanceState(outState);
     }

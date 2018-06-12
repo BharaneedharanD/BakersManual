@@ -1,4 +1,4 @@
-package NetworkCall;
+package networkcalls;
 
 import android.support.test.espresso.IdlingResource;
 

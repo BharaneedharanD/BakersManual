@@ -1,4 +1,4 @@
-package Adapters;
+package adapters;
 
 
 import android.content.Context;
@@ -14,7 +14,7 @@ import com.bharanee.android.bakersmanual.R;
 
 import java.util.ArrayList;
 
-import Modal.BakeItem;
+import modal.BakeItem;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder> {
 ArrayList<BakeItem> listItems=null;

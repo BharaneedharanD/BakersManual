@@ -1,4 +1,4 @@
-package Modal;
+package modal;
 
 import java.util.ArrayList;
 

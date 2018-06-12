@@ -12,9 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import Adapters.ItemListAdapter;
-import NetworkCall.NetworkTasks;
-import NetworkCall.SimpleIdlingResource;
+import adapters.ItemListAdapter;
+import networkcalls.NetworkTasks;
+import networkcalls.SimpleIdlingResource;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

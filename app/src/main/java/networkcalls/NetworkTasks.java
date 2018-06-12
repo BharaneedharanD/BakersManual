@@ -1,6 +1,5 @@
-package NetworkCall;
+package networkcalls;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -17,8 +16,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import Adapters.ItemListAdapter;
-import Modal.BakeItem;
+import adapters.ItemListAdapter;
+import modal.BakeItem;
 
 public class NetworkTasks {
     public static ArrayList<BakeItem> items;
